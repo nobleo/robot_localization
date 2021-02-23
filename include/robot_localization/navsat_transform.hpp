@@ -40,6 +40,7 @@
 #include <Eigen/Dense>
 #include <GeographicLib/Geocentric.hpp>
 #include <GeographicLib/LocalCartesian.hpp>
+#include <GeographicLib/UTMUPS.hpp>
 #include <nav_msgs/msg/odometry.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/imu.hpp>
@@ -406,9 +407,14 @@ private:
   tf2::Transform cartesian_world_trans_inverse_;
 
   /**
-   * @brief Cartesian zone as determined after transforming GPS message
+   * @brief the UTM zone (zero means UPS)
    */
-  std::string utm_zone_;
+  int utm_zone_;
+
+  /**
+   * @brief hemisphere (true means north, false means south)
+   */
+  bool northp_;
 
   /**
    * @brief Frame ID of the GPS odometry output
