@@ -331,4 +331,10 @@ if (CATKIN_ENABLE_TESTING)
                         ${catkin_LIBRARIES}
                         ${rostest_LIBRARIES})
 
+  #### NAVSAT TRANSFORM TESTS ####
+  add_rostest_gtest(test_navsat_transform
+                    test/test_navsat_transform.test
+                    test/test_navsat_transform.cpp)
+  target_link_libraries(test_navsat_transform ${catkin_LIBRARIES} ${rostest_LIBRARIES})
+
 endif()
