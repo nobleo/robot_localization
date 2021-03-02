@@ -446,6 +446,20 @@ bool NavSatTransform::fromLLCallback(
   return true;
 }
 
+bool NavSatTransform::setUTMZoneCallback(
+  const std::shared_ptr<robot_localization::srv::SetUTMZone::Request> request,
+  std::shared_ptr<robot_localization::srv::SetUTMZone::Response>)
+{
+  double x_unused;
+  double y_unused;
+  int prec_unused;
+  GeographicLib::MGRS::Reverse(
+    request->utm_zone, utm_zone_, northp_, x_unused, y_unused,
+    prec_unused, true);
+  RCLCPP_INFO(this->get_logger(), "UTM zone set to %d %s", utm_zone_, northp_ ? "north" : "south");
+  return true;
+}
+
 nav_msgs::msg::Odometry NavSatTransform::cartesianToMap(
   const tf2::Transform & cartesian_pose) const
 {
@@ -858,7 +872,6 @@ void NavSatTransform::setTransformGps(
       cartesian_x, cartesian_y, utm_meridian_convergence_degrees, k_tmp);
     utm_meridian_convergence_ = utm_meridian_convergence_degrees *
       navsat_conversions::RADIANS_PER_DEGREE;
-    utm_meridian_convergence_ *= navsat_conversions::RADIANS_PER_DEGREE;
   }
 
   RCLCPP_INFO(
