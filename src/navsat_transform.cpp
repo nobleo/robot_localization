@@ -116,7 +116,7 @@ NavSatTransform::NavSatTransform(const rclcpp::NodeOptions & options)
       "Please use 'broadcast_cartesian_transform' instead.");
   } else {
     broadcast_cartesian_transform_ =
-      this->declare_parameter("broadcast_utm_transform", broadcast_cartesian_transform_);
+      this->declare_parameter("broadcast_cartesian_transform", broadcast_cartesian_transform_);
   }
 
   broadcast_cartesian_transform_as_parent_frame_ =
@@ -857,7 +857,7 @@ void NavSatTransform::setTransformGps(
       msg->latitude, msg->longitude, utm_zone_, northp_,
       cartesian_x, cartesian_y, utm_meridian_convergence_degrees, k_tmp);
     utm_meridian_convergence_ = utm_meridian_convergence_degrees *
-      NavsatConversions::RADIANS_PER_DEGREE;
+      navsat_conversions::RADIANS_PER_DEGREE;
     utm_meridian_convergence_ *= navsat_conversions::RADIANS_PER_DEGREE;
   }
 
